@@ -24,7 +24,7 @@ public class PetRepo implements PetRepoInt {
     @Override
     public Pet addPet(Pet pet){
         String sql = "INSERT INTO pets (name, breed, age, owner_id) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, pet.getPetName(), pet.getBreed(), pet.getPetAge(), pet.getOwner().getUserId());
+        jdbcTemplate.update(sql, pet.getPetName(), pet.getBreed(), pet.getPetAge(), pet.getOwnerId());
         return pet;
     }
 

@@ -1,21 +1,25 @@
 package com.example.racekat_ny_udgave.Model;
 
+import com.example.racekat_ny_udgave.Services.UserService;
+
 public class Pet {
+
+    private UserService userService;
 
     private int petId;
     private String petName;
     private int petAge;
     private String breed;
-    User owner;
+    private int ownerId;
 
-    Pet(){}
+    public Pet(){}
 
-    Pet(int petId, String petName, int petAge, String breed, User owner) {
+    public Pet(int petId, String petName, int petAge, String breed, int ownerId) {
         this.petId = petId;
         this.petName = petName;
         this.petAge = petAge;
         this.breed = breed;
-        this.owner = owner;
+        this.ownerId = ownerId;
     }
 
 
@@ -51,19 +55,15 @@ public class Pet {
         this.petId = petId;
     }
 
-    public User getOwner() {
-        return owner;
-    }
-    public void setOwner(User owner) {
-        this.owner = owner;
+    public int getOwnerId() {
+        return ownerId;
     }
 
+    public void setOwnerId(int ownerId) {
+        this.ownerId = ownerId;
+    }
 
-
-
-
-
-
-
-
+    public User getPetOwner(Pet pet) {
+        return userService.getUserById(pet.getOwnerId());
+    }
 }
