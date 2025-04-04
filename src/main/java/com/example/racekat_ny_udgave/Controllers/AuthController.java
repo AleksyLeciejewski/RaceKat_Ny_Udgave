@@ -2,12 +2,12 @@ package com.example.racekat_ny_udgave.Controllers;
 
 import com.example.racekat_ny_udgave.Model.User;
 import com.example.racekat_ny_udgave.Services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 
 @Controller
 @RequestMapping("/auth")

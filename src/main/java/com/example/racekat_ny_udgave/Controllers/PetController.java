@@ -4,12 +4,12 @@ import com.example.racekat_ny_udgave.Model.Pet;
 import com.example.racekat_ny_udgave.Model.User;
 import com.example.racekat_ny_udgave.Services.PetService;
 import com.example.racekat_ny_udgave.Services.UserService;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -25,7 +25,7 @@ public class PetController {
         this.userService = userService;
     }
 
-    // Beskyttet metode for at sikre, at brugeren er logget ind
+    //Tjekker om bruger fortsat er logget ind i sessionen
     private User getAuthenticatedUser(HttpSession session) {
         Integer userId = (Integer) session.getAttribute("userId");
         if (userId == null) {
@@ -58,10 +58,11 @@ public class PetController {
     }
 
     @PostMapping("/create")
-    public String createPet(@RequestParam("petName") String petName,
-                            @RequestParam("petAge") int petAge,
-                            @RequestParam("breed") String breed,
-                            HttpSession session, Model model) {
+    public String createPet(
+        @RequestParam("petName") String petName,
+        @RequestParam("petAge") int petAge,
+        @RequestParam("breed") String breed,
+        HttpSession session, Model model) {
 
         User user = getAuthenticatedUser(session);
         if (user == null) {
@@ -75,10 +76,8 @@ public class PetController {
             pet.setPetAge(petAge);
             pet.setBreed(breed);
 
-            // Her er det vigtigt at besluttte om vi gemmer hele User objektet (som diskuteret tidligere)
-            // eller kun ID'et. For eksemplens skyld gemmer jeg hele objektet, men i et rigtigt system
-            // ville jeg overveje at gemme kun ID'et.
-            pet.setOwner(user);
+            //Gemmer userID for nu, senere kan vi lavere en løsere kobling i koden, og sætte forholdet op gennem database keys
+            pet.setOwnerId(user.getUserId());
 
             petService.registerPet(pet);
 
@@ -90,8 +89,7 @@ public class PetController {
     }
 
     @GetMapping("/edit/{id}")
-    public String showEditPetForm(@PathVariable("id") int petId,
-                                  HttpSession session, Model model) {
+    public String showEditPetForm(@PathVariable("id") int petId, HttpSession session, Model model) {
         User user = getAuthenticatedUser(session);
         if (user == null) {
             return "redirect:/auth/login";
@@ -99,8 +97,8 @@ public class PetController {
 
         Pet pet = petService.getPetById(petId);
 
-        // Sikkerhedscheck: Kun ejeren kan redigere sit kæledyr
-        if (pet == null || pet.getOwner().getUserId() != user.getUserId()) {
+        // Sikkerhedscheck, sikrer kun ejeren kan redigere sit kæledyr
+        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
 
@@ -109,21 +107,14 @@ public class PetController {
     }
 
     @PostMapping("/edit/{id}")
-    public String updatePet(@PathVariable("id") int petId,
-                            @RequestParam("petName") String petName,
-                            @RequestParam("petAge") int petAge,
-                            @RequestParam("breed") String breed,
-                            HttpSession session, Model model) {
-
+    public String updatePet(@PathVariable("id") int petId, @RequestParam("petName") String petName, @RequestParam("petAge") int petAge, @RequestParam("breed") String breed, HttpSession session, Model model) {
         User user = getAuthenticatedUser(session);
         if (user == null) {
             return "redirect:/auth/login";
         }
-
         Pet pet = petService.getPetById(petId);
 
-        // Sikkerhedscheck: Kun ejeren kan redigere sit kæledyr
-        if (pet == null || pet.getOwner().getUserId() != user.getUserId()) {
+        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
 
@@ -143,14 +134,10 @@ public class PetController {
         if (user == null) {
             return "redirect:/auth/login";
         }
-
         Pet pet = petService.getPetById(petId);
-
-        // Sikkerhedscheck: Kun ejeren kan slette sit kæledyr
-        if (pet == null || pet.getOwner().getUserId() != user.getUserId()) {
+        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
-
         model.addAttribute("pet", pet);
         return "pet/delete-confirmation";
     }
@@ -161,16 +148,11 @@ public class PetController {
         if (user == null) {
             return "redirect:/auth/login";
         }
-
         Pet pet = petService.getPetById(petId);
-
-        // Sikkerhedscheck: Kun ejeren kan slette sit kæledyr
-        if (pet == null || pet.getOwner().getUserId() != user.getUserId()) {
+        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
-
         petService.deletePet(petId);
-
         return "redirect:/pet/list";
     }
 
@@ -181,7 +163,6 @@ public class PetController {
         if (user == null) {
             return "redirect:/auth/login";
         }
-
         Pet pet = petService.getPetById(petId);
         if (pet == null) {
             return "redirect:/pet/list";
@@ -199,11 +180,10 @@ public class PetController {
             return "redirect:/auth/login";
         }
 
-        // I en rigtig app ville du kontrollere brugerens rolle her
+        //Plads til eventuel logik for kontrol af brugerens rolle, tænker vi kan lave en admin og almindelig user template til hver
 
         List<Pet> allPets = petService.getAllPets();
         model.addAttribute("pets", allPets);
-
         return "pet/all";
     }
 }

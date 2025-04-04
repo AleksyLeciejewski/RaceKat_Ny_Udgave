@@ -13,5 +13,4 @@ public interface PetRepoInt {
     Pet findPetById(int id);
     void updatePet(Pet pet);
     Pet findPetByOwner(User user);
-
 }

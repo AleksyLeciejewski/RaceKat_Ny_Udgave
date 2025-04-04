@@ -4,9 +4,11 @@ import com.example.racekat_ny_udgave.Model.Pet;
 import com.example.racekat_ny_udgave.Model.User;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+@Repository
 public class PetRepo implements PetRepoInt {
 
     private JdbcTemplate jdbcTemplate;

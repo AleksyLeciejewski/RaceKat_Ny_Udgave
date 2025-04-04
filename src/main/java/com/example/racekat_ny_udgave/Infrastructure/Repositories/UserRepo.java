@@ -1,12 +1,15 @@
 package com.example.racekat_ny_udgave.Infrastructure.Repositories;
 
 import com.example.racekat_ny_udgave.Model.User;
+import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
-public class UserRepo implements UserRepoInt{
+@Repository
+public class UserRepo implements UserRepoInt {
 
     private JdbcTemplate jdbcTemplate;
 
@@ -15,16 +18,16 @@ public class UserRepo implements UserRepoInt{
     }
 
     @Override
-    public List<User> getAllUsers(){
-    String sql = "SELECT * FROM owners";
-    return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
+    public List<User> getAllUsers() {
+        String sql = "SELECT * FROM owners";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
     }
 
     @Override
     public User addUser(User user) {
-    String sql = "INSERT INTO owners (username, name, id, email) VALUES (?, ?, ?, ?)";
-    jdbcTemplate.update(sql, user.getUsername(), user.getOwnerName(), user.getUserId(), user.getEmail());
-    return user;
+        String sql = "INSERT INTO owners (username, name, id, email) VALUES (?, ?, ?, ?)";
+        jdbcTemplate.update(sql, user.getUsername(), user.getOwnerName(), user.getUserId(), user.getEmail());
+        return user;
     }
 
     @Override
@@ -35,14 +38,24 @@ public class UserRepo implements UserRepoInt{
 
 
     @Override
-    public User getUser(int userId){
+    public User getUser(int userId) {
         String sql = "SELECT * FROM owners WHERE id = ?";
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), userId);
     }
 
     @Override
-    public void updateUser(User user){
-    String sql = "UPDATE owners SET name = ?, id = ?, email = ? WHERE id = ?";
-    jdbcTemplate.update(sql, user.getOwnerName(), user.getUserId(), user.getEmail(), user.getUserId());
+    public void updateUser(User user) {
+        String sql = "UPDATE owners SET name = ?, id = ?, email = ? WHERE id = ?";
+        jdbcTemplate.update(sql, user.getOwnerName(), user.getUserId(), user.getEmail(), user.getUserId());
+    }
+
+    @Override
+    public User findUserByEmail(String email) {
+        try {
+            String sql = "SELECT * FROM owners WHERE email = ?";
+            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(User.class), email);
+        } catch (EmptyResultDataAccessException e) {
+            return null;
+        }
     }
 }

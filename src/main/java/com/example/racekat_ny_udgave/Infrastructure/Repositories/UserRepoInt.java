@@ -11,4 +11,5 @@ public interface UserRepoInt {
     void deleteUser(User user);
     User getUser(int userId);
     void updateUser(User user);
+    User findUserByEmail(String email);
 }
