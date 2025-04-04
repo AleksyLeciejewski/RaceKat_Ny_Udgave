@@ -30,8 +30,6 @@ public class AuthController {
                         @RequestParam("password") String password,
                         HttpSession session,
                         Model model) {
-
-        // Dette er en simpel implementering - i virkelige systemer ville du have mere sikker validering
         User user = userService.findUserByEmail(email);
 
         if (user != null && user.getPassword().equals(password)) {
@@ -65,8 +63,7 @@ public class AuthController {
 
         // Registrér ny bruger
         try {
-            // Vi genererer et ID automatisk (dette kunne også håndteres i service-laget)
-            int userId = userService.generateUserId();
+            int userId = userService.generateUserId();//Overveje om vi skal smide det i servicelaget istedet
             userService.registerUser(email, userId, ownerName, username, password);
             model.addAttribute("success", "Din konto er blevet oprettet. Log venligst ind.");
             return "login";

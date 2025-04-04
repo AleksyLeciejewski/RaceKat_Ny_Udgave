@@ -107,11 +107,7 @@ public class UserController {
         for (Pet pet : userPets) {
             petService.deletePet(pet.getPetId());
         }
-
-        // Slet brugeren
         userService.deleteUserById(user.getUserId());
-
-        // Afslut session
         session.invalidate();
 
         return "redirect:/auth/login?deleted=true";
@@ -124,12 +120,8 @@ public class UserController {
         if (user == null) {
             return "redirect:/auth/login";
         }
-
-        // I en rigtig app ville du kontrollere brugerens rolle her
-
         List<User> allUsers = userService.getAllUsers();
         model.addAttribute("users", allUsers);
-
         return "user/list";
     }
 }

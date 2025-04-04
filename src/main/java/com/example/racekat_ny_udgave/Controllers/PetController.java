@@ -113,7 +113,6 @@ public class PetController {
             return "redirect:/auth/login";
         }
         Pet pet = petService.getPetById(petId);
-
         if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
