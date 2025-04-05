@@ -1,0 +1,56 @@
+body {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.7)),
+    url("/staticc/picsin_background.jpg");
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-blend-mode: darken;
+    background-repeat: no-repeat;
+    font-family: "Times New Roman", sans-serif;
+}
+
+.welcomeText {
+    text-align: center;
+    position: absolute;
+    top: 25%;
+    right: 25%;
+    left: 25%;
+    bottom: 25%;
+    color: white;
+    box-shadow: 0 4px 10px 0 rgba(255, 255, 255, 0.3), 0 8px 16px 0 rgba(255, 255, 255, 0.3);
+
+}
+
+
+.button-container {
+    display: flex;
+    gap: 80px;
+    justify-content: center;
+    margin-top: 380px;
+
+}
+
+.leftButton,
+.centerButton,
+.rightButton {
+    background: linear-gradient(145deg, rgba(134, 145, 29, 0.51), #414141);
+    padding: 10px;
+    border-radius: 15px;
+    text-align: center;
+}
+
+
+.leftButton button,
+.centerButton button,
+.rightButton button {
+    background: linear-gradient(to right, #86911D82, #414141FF);
+    color: #fff;
+    padding: 15px 30px;
+    font-size: 18px;
+    border: 1px solid #777;
+    border-radius: 8px;
+    box-shadow: 0 0 12px rgba(5,5,5,0.7);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+

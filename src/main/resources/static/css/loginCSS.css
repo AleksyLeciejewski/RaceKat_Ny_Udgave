@@ -1,0 +1,90 @@
+body {
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+
+    background-color: rgba(134, 145, 29, 0.51);
+}
+
+
+
+.loginBox {
+    width: 500px;
+    height: 250px;
+    position: fixed;
+    top: 320px;
+    left: 230px;
+    background-color: beige;
+    border-radius: 10px;
+    border: 2px solid rgba(31, 27, 20, 0.84);
+    .LoginInput {
+        position: absolute;
+        left: 100px;
+        top: 15px;
+        font: 24px "Segoe Fluent Icons";
+        display: flex;
+        flex-direction: column;
+        gap: 12px;
+        width: 300px;
+    }
+    .LoginInput input {
+        width: 100%;
+        height: 25px;
+        border: black solid 1px;
+        border-radius: 10px;
+    }
+    .LoginInput button {
+        width: 35%;
+        height: 35px;
+        background-color: rgba(31, 27, 20, 0.84);
+        font-weight: bold;
+        color: #ffffff;
+        font-size: 16px;
+        border: none;
+        border-radius: 12px;
+
+    }
+}
+
+.infoBox {
+    width: 50%;
+    height: 100%;
+    position: fixed;
+    top: -10px;
+    right: 0px;
+    background-color: floralwhite;
+    padding: 10px;
+
+    box-shadow: 0 6px 16px rgb(0, 0, 0);
+    .TopLine {
+        text-align: center;
+        font: 32px "Times New Roman", serif;
+        font-weight: bold;
+        box-shadow: 0 4px 8px rgb(0, 0, 0);
+        width: 25%;
+        position: relative;
+        right: -362px;
+        top: 20px;
+    }
+
+    .InfoText1 {
+        width: 70%;
+        right: 135px;
+        bottom: 55px;
+        position: absolute;
+        text-align: center;
+        font: 24px "Times New Roman", serif;
+        font-weight: bold;
+    }
+    .Info {
+        width: 80%;
+        height: 80%;
+        top: 70px;
+        right: -100px;
+        bottom: 25px;
+        position: relative;
+        background-repeat: no-repeat;
+        background-image: url("/staticc/picsfo.jpg");
+        box-shadow: 0 6px 16px rgb(0, 0, 0);
+    }
+}
