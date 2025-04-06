@@ -84,7 +84,7 @@ body {
         bottom: 25px;
         position: relative;
         background-repeat: no-repeat;
-        background-image: url("/staticc/picsfo.jpg");
+        background-image: url("/pics/info.jpg");
         box-shadow: 0 6px 16px rgb(0, 0, 0);
     }
 }
