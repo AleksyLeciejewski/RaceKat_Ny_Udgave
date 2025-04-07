@@ -44,14 +44,13 @@ public class AuthController {
     }
 
     @GetMapping("/register")
-    public String showRegisterPage() {
-        return "/register";
+    public String showRegisterPage(Model model) {
+        model.addAttribute("user", new User());
+        return "register";
     }
 
     @PostMapping("/register")
-    public String register(@RequestParam("email") String email,
-                           @RequestParam("password") String password,
-                           Model model) {
+    public String register(@ModelAttribute User user, Model model) {
 
         // Check om brugeren allerede eksisterer
         if (userService.isEmailInUse(email)) {
