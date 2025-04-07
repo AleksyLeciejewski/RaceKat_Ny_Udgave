@@ -2,6 +2,7 @@ package com.example.racekat_ny_udgave.Services;
 
 import com.example.racekat_ny_udgave.Infrastructure.Repositories.PetRepo;
 import com.example.racekat_ny_udgave.Model.Pet;
+import com.example.racekat_ny_udgave.Model.Profile;
 import com.example.racekat_ny_udgave.Model.User;
 import org.springframework.stereotype.Service;
 
@@ -10,11 +11,12 @@ import java.util.List;
 
 @Service
 public class PetService {
+    private final PetRepo petRepo;
+    private final ProfileService profileService;
 
-    private PetRepo petRepo;
-
-    public PetService(PetRepo petRepo) {
+    public PetService(PetRepo petRepo, ProfileService profileService) {
         this.petRepo = petRepo;
+        this.profileService = profileService;
     }
 
     public Pet registerPet(Pet pet){
@@ -41,16 +43,30 @@ public class PetService {
         return petRepo.findPetById(id);
     }
 
-    public List<Pet> getPetsByOwnerId(int ownerId) {
+
+    // De fleste metoder forbliver uændrede
+
+    // Omdøb til getPetsByProfileId for klarhed
+    public List<Pet> getPetsByProfileId(int profileId) {
         List<Pet> allPets = getAllPets();
-        List<Pet> ownerPets = new ArrayList<>();
+        List<Pet> profilePets = new ArrayList<>();
 
         for (Pet pet : allPets) {
-            if (pet.getPetOwner(pet) != null && pet.getPetOwner(pet).getUserId() == ownerId) {
-                ownerPets.add(pet);
+            if (pet.getProfileId() == profileId) {
+                profilePets.add(pet);
             }
         }
+        return profilePets;
+    }
 
-        return ownerPets;
+    // Ny metode for at få kæledyr via userId
+    public List<Pet> getPetsByUserId(int userId) {
+        // Find profilen først
+        Profile profile = profileService.getProfileByUserId(userId);
+        if (profile == null) {
+            return new ArrayList<>(); // Brugeren har ingen profil
+        }
+        // Brug profil-ID til at finde kæledyr
+        return getPetsByProfileId(profile.getProfileId());
     }
 }

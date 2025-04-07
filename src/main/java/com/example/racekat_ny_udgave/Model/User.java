@@ -60,6 +60,4 @@ public class User {
     }
 
     public User(int userId, String password, String email) {}
-
-
 }

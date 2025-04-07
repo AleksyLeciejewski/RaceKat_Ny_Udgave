@@ -38,7 +38,7 @@ public class UserService {
             userRepo.deleteUser(user);
         }
     }
-    // NYE METODER:
+
     public User findUserByEmail(String email) {
         return userRepo.findUserByEmail(email);
     }

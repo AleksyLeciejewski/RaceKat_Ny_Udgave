@@ -77,7 +77,7 @@ public class PetController {
             pet.setBreed(breed);
 
             //Gemmer userID for nu, senere kan vi lavere en løsere kobling i koden, og sætte forholdet op gennem database keys
-            pet.setOwnerId(user.getUserId());
+            pet.setProfileId(user.getUserId());
 
             petService.registerPet(pet);
 
