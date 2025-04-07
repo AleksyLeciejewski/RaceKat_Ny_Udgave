@@ -15,8 +15,8 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public User registerUser(String email, int userId, String ownerName, String username, String password) {
-        User user = new User(email, userId, ownerName, username, password);
+    public User registerUser(String email, int userId, String password) {
+        User user = new User(userId, password, email);
         return userRepo.addUser(user);
     }
 

@@ -15,7 +15,7 @@ body {
     border-radius: 10px;
     position: absolute;
 
-    width: 400px;
+    width: 400px; /
     height: 100px;
     top: 150px;
     left: 780px;
