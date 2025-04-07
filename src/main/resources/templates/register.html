@@ -9,15 +9,19 @@
 
 <div class="registerBox">
   <div class="RegisterInput">
-    <label for="username">Brugernavn</label>
-    <input type="text" id="username">
+    <form th:action="@{/register}" method="post">
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email"  th:field="email" required>
     <label for="password">Adgangskode</label>
-    <input type="password" id="password">
+    <input type="password" id="password" th:field="password" required>
 
     <button type="submit" class="registerButton">Opret bruger</button>
+  </form>
+    <form action="/login" th:href="@{/login}">
     <button type="submit" class="returnButton">Returner til Login</button>
-
+    </form>
   </div>
+
 </div>
 </body>
 </html>

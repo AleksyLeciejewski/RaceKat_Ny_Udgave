@@ -18,19 +18,24 @@
 
 
 <div class="button-container">
-
+<form action="/login" th:href="@{/login}">
     <div class="leftButton">
         <button>Login</button>
     </div>
+</form>
 
+    <form action="register" th:href="@{/register}">
     <div class="centerButton">
         <button>Registrer</button>
     </div>
+    </form>
 
+    <form action="/admin" th:href="@{/admin}">
     <div class="rightButton">
         <button>Admin Login</button>
     </div>
 </div>
+</form>
 
 </body>
 </html>
