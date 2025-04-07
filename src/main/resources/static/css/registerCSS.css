@@ -3,45 +3,67 @@ body {
 }
 
 .registerBox {
-    position: relative;
-    top: 350px;
-    left: 600px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    width: 70%;
+    padding: 50px 40px;
+    margin: 100px auto 0 auto;
+
     border-radius: 10px;
     box-shadow: 10px 5px 5px 10px rgba(5, 5, 5, 0.68), 0 6px 20px 0 rgb(183, 89, 18);
-    width: 800px;
-    height: 250px;
-
     background-size: 300px 300px;
     background-position: left -50px top -10px;
     background-repeat: no-repeat;
     background-image: url("/pics/catpaws.png");
 
 
-}
 
+}
+.formLayout {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    gap: 60px;
+    width: 100%;
+    max-width: 600px;
+}
 .RegisterInput {
-    font: bold 20px "Segoe Fluent Icons", serif;
-    position: relative;
-    top: 30px;
-    left: 265px;
-    width: 250px;
+    font: 16px italic, "Times New Roman", Serif;
+    color: floralwhite;
+    margin-left: 30px;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    flex: 2;
 }
 .RegisterInput input {
     border: 1px solid rgb(0, 0, 0);
     border-radius: 4px;
-    height: 20px;
+    height: 40px;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
 }
-.registerButton {
-    position: relative;
-    top: -60px;
-    left: 335px;
+.buttonColumn {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: flex-end;
+    gap: 50px;
+    margin-top: 30px;
+    flex: 1;
+}
+.registerButton,
+.returnButton {
     width: 150px;
     height: 50px;
     border: none;
     border-radius: 10px;
+    font-size: 16px;
+    cursor: pointer;
 }
 .registerButton:hover {
     background-color: rgba(50, 205, 50, 0.58);
@@ -50,15 +72,7 @@ body {
     transition-duration: 0.2s;
     transition-timing-function: ease;
 }
-.returnButton {
-    position: relative;
-    top: -220px;
-    left: 335px;
-    width: 150px;
-    height: 50px;
-    border: none;
-    border-radius: 10px;
-}
+
 .returnButton:hover {
     background-color: rgb(241, 223, 85);
     cursor: pointer;

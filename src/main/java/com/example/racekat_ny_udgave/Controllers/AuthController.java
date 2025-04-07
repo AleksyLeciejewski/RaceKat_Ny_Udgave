@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-@RequestMapping("/auth")
+//@RequestMapping("/auth")
 public class AuthController {
 
     private final UserService userService;
@@ -39,23 +39,24 @@ public class AuthController {
             return "redirect:/user/profile";
         } else {
             model.addAttribute("error", "Forkert email eller adgangskode");
-            return "/login";
+            return "redirect:auth/login";
         }
     }
 
     @GetMapping("/register")
-    public String showRegisterPage(Model model) {
-        model.addAttribute("user", new User());
+    public String showRegisterPage() {
         return "register";
     }
 
     @PostMapping("/register")
-    public String register(@ModelAttribute User user, Model model) {
+    public String register(@RequestParam("email") String email,
+                            @RequestParam("password") String password,
+                            Model model) {
 
         // Check om brugeren allerede eksisterer
         if (userService.isEmailInUse(email)) {
             model.addAttribute("error", "Email er allerede i brug");
-            return "/register";
+            return "redirect:/login";
         }
 
         // Registrér ny bruger
@@ -63,10 +64,10 @@ public class AuthController {
             int userId = userService.generateUserId();//Overveje om vi skal smide det i servicelaget istedet
             userService.registerUser(email, userId, password);
             model.addAttribute("success", "Din konto er blevet oprettet. Log venligst ind.");
-            return "/login";
+            return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", "Der opstod en fejl: " + e.getMessage());
-            return "/register";
+            return "auth/register";
         }
     }
 

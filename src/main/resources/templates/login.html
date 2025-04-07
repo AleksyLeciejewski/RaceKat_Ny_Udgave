@@ -1,34 +1,33 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" th:href="@{/css/loginCSS.css}">
-  <title>Title</title>
+  <title>Login</title>
 </head>
 <body>
 
+<div class="pageContainer">
+  <div class="loginBox">
+    <form th:action="@{/login}" method="post" class="loginForm">
+      <h2>Login</h2>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
 
-<div class="loginBox">
+      <label for="password">Kodeord</label>
+      <input type="password" id="password" name="password" required>
 
-<form action="/login" method="post">
-  <div class="LoginInput">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email">
-    <label for="password">Kodeord</label>
-    <input type="password" id="password">
-
-    <button type="submit">Login</button>
+      <button type="submit">Login</button>
+    </form>
   </div>
-</form>
 
-</div>
-
-<div class="infoBox">
-  <h1 class="TopLine">Vidste du?</h1>
-  <div class="Info"></div>
-  <div class="InfoText1">
-    <p>Ragdoll-katten er kendt for sit rolige temperament og sin tendens til at slappe helt af, når man løfter den op –
-      deraf navnet. Den har smukke blå øjne og en silkeblød, semi-lang pels, som kræver minimal pleje.</p>
+  <div class="infoBox">
+    <h2>Vidste du?</h2>
+    <div class="infoImage"></div>
+    <p class="infoText">
+      Ragdoll-katten er kendt for sit rolige temperament og sin tendens til at slappe helt af, når man løfter den op – deraf navnet. Den har smukke blå øjne og en silkeblød, semi-lang pels, som kræver minimal pleje.
+    </p>
   </div>
 </div>
 
