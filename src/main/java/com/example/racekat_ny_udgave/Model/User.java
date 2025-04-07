@@ -59,4 +59,7 @@ public class User {
         this.email = email;
     }
 
+    public User(int userId, String password, String email) {}
+
+
 }

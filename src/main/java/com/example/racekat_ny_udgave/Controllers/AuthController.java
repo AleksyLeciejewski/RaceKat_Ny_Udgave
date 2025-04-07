@@ -22,7 +22,7 @@ public class AuthController {
 
     @GetMapping("/login")
     public String showLoginPage() {
-        return "login";
+        return "/login";
     }
 
     @PostMapping("/login")
@@ -39,37 +39,35 @@ public class AuthController {
             return "redirect:/user/profile";
         } else {
             model.addAttribute("error", "Forkert email eller adgangskode");
-            return "login";
+            return "/login";
         }
     }
 
     @GetMapping("/register")
     public String showRegisterPage() {
-        return "register";
+        return "/register";
     }
 
     @PostMapping("/register")
     public String register(@RequestParam("email") String email,
-                           @RequestParam("ownerName") String ownerName,
-                           @RequestParam("username") String username,
                            @RequestParam("password") String password,
                            Model model) {
 
         // Check om brugeren allerede eksisterer
         if (userService.isEmailInUse(email)) {
             model.addAttribute("error", "Email er allerede i brug");
-            return "register";
+            return "/register";
         }
 
         // Registrér ny bruger
         try {
             int userId = userService.generateUserId();//Overveje om vi skal smide det i servicelaget istedet
-            userService.registerUser(email, userId, ownerName, username, password);
+            userService.registerUser(email, userId, password);
             model.addAttribute("success", "Din konto er blevet oprettet. Log venligst ind.");
-            return "login";
+            return "/login";
         } catch (Exception e) {
             model.addAttribute("error", "Der opstod en fejl: " + e.getMessage());
-            return "register";
+            return "/register";
         }
     }
 

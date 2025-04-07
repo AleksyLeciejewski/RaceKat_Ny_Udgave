@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
   <meta charset="UTF-8">
   <title>Opret bruger</title>
@@ -10,18 +10,17 @@
 <div class="registerBox">
   <div class="RegisterInput">
     <form th:action="@{/register}" method="post">
-    <label for="email">Email</label>
-    <input type="email" id="email" name="email"  th:field="email" required>
-    <label for="password">Adgangskode</label>
-    <input type="password" id="password" th:field="password" required>
+      <label for="email">Email</label>
+      <input type="email" id="email" name="email" required>
+      <label for="password">Adgangskode</label>
+      <input type="password" id="password" name="password" required>
 
-    <button type="submit" class="registerButton">Opret bruger</button>
-  </form>
-    <form action="/login" th:href="@{/login}">
-    <button type="submit" class="returnButton">Returner til Login</button>
+      <button type="submit" class="registerButton">Opret bruger</button>
+    </form>
+    <form th:action="@{/login}" method="get">
+      <button type="submit" class="returnButton">Returner til Login</button>
     </form>
   </div>
-
 </div>
 </body>
 </html>
