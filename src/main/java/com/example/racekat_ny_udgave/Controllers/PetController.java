@@ -41,7 +41,7 @@ public class PetController {
             return "redirect:/auth/login";
         }
 
-        List<Pet> userPets = petService.getPetsByOwnerId(user.getUserId());
+        List<Pet> userPets = petService.getPetsByProfileId(user.getUserId());
         model.addAttribute("pets", userPets);
 
         return "pet/list";
@@ -77,7 +77,7 @@ public class PetController {
             pet.setBreed(breed);
 
             //Gemmer userID for nu, senere kan vi lavere en løsere kobling i koden, og sætte forholdet op gennem database keys
-            pet.setProfileId(user.getUserId());
+            pet.setProfileId(user.getUserId()); //Skal stadig kigges på
 
             petService.registerPet(pet);
 
@@ -98,7 +98,7 @@ public class PetController {
         Pet pet = petService.getPetById(petId);
 
         // Sikkerhedscheck, sikrer kun ejeren kan redigere sit kæledyr
-        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
+        if (!petService.isOwnedByUser(petId, user.getUserId())) {
             return "redirect:/pet/list";
         }
 
@@ -113,7 +113,7 @@ public class PetController {
             return "redirect:/auth/login";
         }
         Pet pet = petService.getPetById(petId);
-        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
+        if (!petService.isOwnedByUser(petId, user.getUserId())) {
             return "redirect:/pet/list";
         }
 
@@ -134,9 +134,10 @@ public class PetController {
             return "redirect:/auth/login";
         }
         Pet pet = petService.getPetById(petId);
-        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
+        if (!petService.isOwnedByUser(petId, user.getUserId())) {
             return "redirect:/pet/list";
         }
+
         model.addAttribute("pet", pet);
         return "pet/delete-confirmation";
     }
@@ -148,9 +149,10 @@ public class PetController {
             return "redirect:/auth/login";
         }
         Pet pet = petService.getPetById(petId);
-        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
+        if (!petService.isOwnedByUser(petId, user.getUserId())) {
             return "redirect:/pet/list";
         }
+
         petService.deletePet(petId);
         return "redirect:/pet/list";
     }

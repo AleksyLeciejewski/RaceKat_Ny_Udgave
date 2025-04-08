@@ -25,8 +25,8 @@ public class UserRepo implements UserRepoInt {
 
     @Override
     public User addUser(User user) {
-        String sql = "INSERT INTO owners (username, name, id, email) VALUES (?, ?, ?, ?)";
-        jdbcTemplate.update(sql, user.getUsername(), user.getOwnerName(), user.getUserId(), user.getEmail());
+        String sql = "INSERT INTO owners (username, name, email) VALUES (?, ?, ?)";
+        jdbcTemplate.update(sql, user.getUsername(), user.getOwnerName(), user.getEmail());
         return user;
     }
 

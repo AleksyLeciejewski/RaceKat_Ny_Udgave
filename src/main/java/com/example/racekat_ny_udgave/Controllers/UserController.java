@@ -44,7 +44,7 @@ public class UserController {
         model.addAttribute("user", user);
 
         // Hent brugerens kæledyr
-        List<Pet> userPets = petService.getPetsByOwnerId(user.getUserId());
+        List<Pet> userPets = petService.getPetsByProfileId(user.getUserId());
         model.addAttribute("pets", userPets);
 
         return "user/profile";
@@ -103,7 +103,7 @@ public class UserController {
         }
 
         // Slet alle brugerens kæledyr først (vigtigt for database integritet)
-        List<Pet> userPets = petService.getPetsByOwnerId(user.getUserId());
+        List<Pet> userPets = petService.getPetsByUserId(user.getUserId());
         for (Pet pet : userPets) {
             petService.deletePet(pet.getPetId());
         }

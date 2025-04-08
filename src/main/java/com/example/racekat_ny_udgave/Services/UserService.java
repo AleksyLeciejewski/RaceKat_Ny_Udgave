@@ -1,6 +1,7 @@
 package com.example.racekat_ny_udgave.Services;
 
 import com.example.racekat_ny_udgave.Infrastructure.Repositories.UserRepo;
+import com.example.racekat_ny_udgave.Model.Profile;
 import com.example.racekat_ny_udgave.Model.User;
 import org.springframework.stereotype.Service;
 
@@ -58,4 +59,13 @@ public class UserService {
         }
         return maxId + 1;
     }
+
+    private ProfileService profileService;
+
+    public User getUserByProfileId(int profileId) {
+        Profile profile = profileService.getProfileById(profileId);
+        if (profile == null) return null;
+        return getUserById(profile.getProfileId());
+    }
+
 }

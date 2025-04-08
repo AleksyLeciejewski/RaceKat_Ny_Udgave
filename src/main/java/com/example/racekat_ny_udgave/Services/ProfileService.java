@@ -38,8 +38,7 @@ public class ProfileService {
             return existingProfile; // Eller kast en exception
         }
 
-        // Opret ny profil
-        Profile newProfile = new Profile(0, profileName, description);
+        Profile newProfile = new Profile(0, 0, profileName, description);
         return profileRepo.createProfile(newProfile, userId);
     }
 

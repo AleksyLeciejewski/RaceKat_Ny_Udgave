@@ -50,8 +50,8 @@ public class PetRepo implements PetRepoInt {
     }
 
     @Override
-    public Pet findPetByOwner(User user){
-    String sql = "SELECT * FROM pets WHERE owner = ?";
+    public Pet findPetByOwner(User user){ //Skal ændres til profile efter implementationen af adskillelse mellem user og profile
+    String sql = "SELECT * FROM pets WHERE owner = ?"; //relationer kræver user - profile - pet
     return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Pet.class), user.getUserId());
     }
 }

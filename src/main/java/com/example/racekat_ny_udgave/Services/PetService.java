@@ -11,8 +11,9 @@ import java.util.List;
 
 @Service
 public class PetService {
-    private final PetRepo petRepo;
+
     private final ProfileService profileService;
+    private PetRepo petRepo;
 
     public PetService(PetRepo petRepo, ProfileService profileService) {
         this.petRepo = petRepo;
@@ -35,16 +36,17 @@ public class PetService {
         }
     }
 
+    public boolean isOwnerOfPet(int userId, Pet pet) {
+        Profile profile = profileService.getProfileById(pet.getProfileId());
+        return profile != null && profile.getUserId() == userId;
+    }
+
     public List<Pet> getAllPets(){
         return petRepo.getAllPets();
     }
-
     public Pet getPetById(int id){
         return petRepo.findPetById(id);
     }
-
-
-    // De fleste metoder forbliver uændrede
 
     // Omdøb til getPetsByProfileId for klarhed
     public List<Pet> getPetsByProfileId(int profileId) {
@@ -61,12 +63,18 @@ public class PetService {
 
     // Ny metode for at få kæledyr via userId
     public List<Pet> getPetsByUserId(int userId) {
-        // Find profilen først
         Profile profile = profileService.getProfileByUserId(userId);
         if (profile == null) {
             return new ArrayList<>(); // Brugeren har ingen profil
         }
-        // Brug profil-ID til at finde kæledyr
         return getPetsByProfileId(profile.getProfileId());
+    }
+
+    public boolean isOwnedByUser(int petId, int userId) {
+        Pet pet = getPetById(petId);
+        if (pet == null) return false;
+
+        Profile profile = profileService.getProfileById(pet.getProfileId());
+        return profile != null && profile.getUserId() == userId;
     }
 }
