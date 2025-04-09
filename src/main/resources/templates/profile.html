@@ -15,6 +15,10 @@
 
         <h1 class="profile-name">Brugerens Navn</h1>
     </div>
+
+    <form action="/user/list" th:href="@{/usersList}">
+        <button class="memberList">Vis alle Medlemmer</button>
+    </form>
     <div class="profile-details">
 
         <div class="profile-info">
@@ -22,7 +26,14 @@
                 <span class="info-title">Email:</span>
             </div>
             <div class="cats-info">
-               <p>Her skal vi tilføje logik for visning af katte</p>
+            <h2>Dine Katte!</h2>
+                <ul>
+                    <li th:each="pet: ${pets}">
+                    <strong>Navn: </strong> <span th:text="${pet.name}"></span>
+                    <strong>Race: </strong> <span th:text="${pet.breed}"></span>
+                    <strong>Alder: </strong> <span th:text="${pet.age}"></span>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>

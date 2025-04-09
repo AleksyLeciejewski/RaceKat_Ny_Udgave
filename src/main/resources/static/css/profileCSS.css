@@ -17,6 +17,10 @@ body {
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }
 
+.memberList{
+    border: 1px solid black;
+    border-radius: 10px;
+}
 
 .profile-header {
     display: flex;

@@ -12,6 +12,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -38,11 +39,11 @@ public class PetController {
         return userService.getUserById(userId);
     }
 
-    @GetMapping("/list")
+ /*   @GetMapping("/list")
     public String listPets(HttpSession session, Model model) {
         User user = getAuthenticatedUser(session);
         if (user == null) {
-            return "redirect:/auth/login";
+            return "redirect:/login";
         }
 
         List<Pet> userPets = petService.getPetsByUserId(user.getUserId());
@@ -50,6 +51,8 @@ public class PetController {
 
         return "pet/list";
     }
+
+  */
 
     @GetMapping("/create")
     public String showCreatePetForm(HttpSession session) {
@@ -63,10 +66,10 @@ public class PetController {
 
     @PostMapping("/create")
     public String createPet(
-        @RequestParam("petName") String petName,
-        @RequestParam("petAge") int petAge,
-        @RequestParam("breed") String breed,
-        HttpSession session, Model model) {
+            @RequestParam("petName") String petName,
+            @RequestParam("petAge") int petAge,
+            @RequestParam("breed") String breed,
+            HttpSession session, Model model) {
 
         User user = getAuthenticatedUser(session);
         if (user == null) {
@@ -111,7 +114,6 @@ public class PetController {
         if (pet == null || profile == null || profile.getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
-
 
 
         model.addAttribute("pet", pet);
@@ -165,7 +167,7 @@ public class PetController {
         // (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId())
         //Gammel kode bliver her lige, hvis det nye jeg har lavet ik virker.
         Profile profile = profileService.getProfileById(pet.getProfileId());
-        if  (pet == null || profile == null || profile.getUserId() != user.getUserId()) {
+        if (pet == null || profile == null || profile.getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
         petService.deletePet(petId);
@@ -202,4 +204,16 @@ public class PetController {
         model.addAttribute("pets", allPets);
         return "pet/all";
     }
+
+    @GetMapping("/dine katte")
+    public String ShowUserCats(HttpSession session, Model model) {
+        User user = getAuthenticatedUser(session);
+        Profile profile = profileService.getProfileById(user.getUserId());
+        if (profile != null) {
+            List<Pet> pets = petService.getPetsByProfileId(profile.getProfileId());
+            model.addAttribute("pets", pets);
+        }
+        return "profile";
+    }
+
 }

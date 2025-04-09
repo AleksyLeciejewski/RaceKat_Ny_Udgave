@@ -11,7 +11,6 @@ import org.springframework.web.bind.annotation.*;
 
 
 @Controller
-//@RequestMapping("/auth")
 public class AuthController {
 
     private final UserService userService;
@@ -22,7 +21,6 @@ public class AuthController {
         this.userService = userService;
         this.profileService = profileService;
     }
-
 
 
     @GetMapping("/login")
@@ -41,7 +39,6 @@ public class AuthController {
             // Gem bruger i session
             session.setAttribute("userId", user.getUserId());
             session.setAttribute("username", user.getUsername());
-            //Pt gemmer jeg hele User objektet i sessionen, for at kunne kalde username i html.
             session.setAttribute("user", user);
             return "redirect:/user/profile";
         } else {
@@ -57,8 +54,9 @@ public class AuthController {
 
     @PostMapping("/register")
     public String register(@RequestParam("email") String email,
-                            @RequestParam("password") String password,
-                            Model model) {
+                           @RequestParam("username") String username,
+                           @RequestParam("password") String password,
+                           Model model) {
 
         // Check om brugeren allerede eksisterer
         if (userService.isEmailInUse(email)) {
@@ -74,7 +72,7 @@ public class AuthController {
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", "Der opstod en fejl: " + e.getMessage());
-            return "auth/register";
+            return "register";
         }
     }
 
@@ -84,25 +82,8 @@ public class AuthController {
         return "redirect:/login";
     }
 
-    private User getUserFromSession(HttpSession session) {
-        return (User) session.getAttribute("user");
+//    private User getUserFromSession(HttpSession session) {
+    //      return (User) session.getAttribute("user");
+// }
     }
 
-
-    @GetMapping("/profile")
-    public String showProfilePage(Model model) {
-        return "profile";
-    }
-    /*
-    @GetMapping("/profile")
-    public String showProfilePage(HttpSession session, Model model) {
-        User user = getUserFromSession(session);
-        if (user == null) {
-            return "redirect:/login";
-        }
-        model.addAttribute("user", user);
-        return "profile";
-    }
-
-     */
-}
