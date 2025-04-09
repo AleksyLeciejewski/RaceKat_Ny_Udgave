@@ -39,7 +39,7 @@ public class ProfileService {
         }
 
         // Opret ny profil
-        Profile newProfile = new Profile(0, profileName, description);
+        Profile newProfile = new Profile(0, profileName, description, userId);
         return profileRepo.createProfile(newProfile, userId);
     }
 

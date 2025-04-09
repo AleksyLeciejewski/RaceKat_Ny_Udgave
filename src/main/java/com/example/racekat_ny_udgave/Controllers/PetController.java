@@ -1,8 +1,10 @@
 package com.example.racekat_ny_udgave.Controllers;
 
 import com.example.racekat_ny_udgave.Model.Pet;
+import com.example.racekat_ny_udgave.Model.Profile;
 import com.example.racekat_ny_udgave.Model.User;
 import com.example.racekat_ny_udgave.Services.PetService;
+import com.example.racekat_ny_udgave.Services.ProfileService;
 import com.example.racekat_ny_udgave.Services.UserService;
 import jakarta.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,11 +20,13 @@ public class PetController {
 
     private final PetService petService;
     private final UserService userService;
+    private final ProfileService profileService;
 
     @Autowired
-    public PetController(PetService petService, UserService userService) {
+    public PetController(PetService petService, UserService userService, ProfileService profileService) {
         this.petService = petService;
         this.userService = userService;
+        this.profileService = profileService;
     }
 
     //Tjekker om bruger fortsat er logget ind i sessionen
@@ -41,7 +45,7 @@ public class PetController {
             return "redirect:/auth/login";
         }
 
-        List<Pet> userPets = petService.getPetsByOwnerId(user.getUserId());
+        List<Pet> userPets = petService.getPetsByUserId(user.getUserId());
         model.addAttribute("pets", userPets);
 
         return "pet/list";
@@ -70,14 +74,18 @@ public class PetController {
         }
 
         try {
+
+            Profile profile = profileService.getProfileByUserId(user.getUserId());
+            if (profile == null) {
+                model.addAttribute("Error", "Ingen profil fundet, SQL Problemer ;)");
+                return "pet/create";
+            }
             // Opret et nyt Pet objekt
             Pet pet = new Pet();
             pet.setPetName(petName);
             pet.setPetAge(petAge);
             pet.setBreed(breed);
-
-            //Gemmer userID for nu, senere kan vi lavere en løsere kobling i koden, og sætte forholdet op gennem database keys
-            pet.setProfileId(user.getUserId());
+            pet.setProfileId(profile.getProfileId());
 
             petService.registerPet(pet);
 
@@ -98,9 +106,13 @@ public class PetController {
         Pet pet = petService.getPetById(petId);
 
         // Sikkerhedscheck, sikrer kun ejeren kan redigere sit kæledyr
-        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
+
+        Profile profile = profileService.getProfileById(pet.getProfileId());
+        if (pet == null || profile == null || profile.getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
+
+
 
         model.addAttribute("pet", pet);
         return "pet/edit";
@@ -113,7 +125,8 @@ public class PetController {
             return "redirect:/auth/login";
         }
         Pet pet = petService.getPetById(petId);
-        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
+        Profile profile = profileService.getProfileById(pet.getProfileId());
+        if (pet == null || profile == null || profile.getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
 
@@ -134,7 +147,8 @@ public class PetController {
             return "redirect:/auth/login";
         }
         Pet pet = petService.getPetById(petId);
-        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
+        Profile profile = profileService.getProfileById(pet.getProfileId());
+        if (pet == null || profile == null || profile.getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
         model.addAttribute("pet", pet);
@@ -148,7 +162,10 @@ public class PetController {
             return "redirect:/auth/login";
         }
         Pet pet = petService.getPetById(petId);
-        if (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId()) {
+        // (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId())
+        //Gammel kode bliver her lige, hvis det nye jeg har lavet ik virker.
+        Profile profile = profileService.getProfileById(pet.getProfileId());
+        if  (pet == null || profile == null || profile.getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
         }
         petService.deletePet(petId);

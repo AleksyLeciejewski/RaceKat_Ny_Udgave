@@ -1,10 +1,31 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Min Profil</title>
+
+    <link rel="stylesheet" th:href="@{/css/profileCSS.css}">
 </head>
 <body>
+<div class="profile-container">
+    <div class="profile-header">
 
+        <img src="/pics/defaultpfp.jpg" alt="Profilbillede" class="profile-avatar">
+
+        <h1 class="profile-name">Brugerens Navn</h1>
+    </div>
+    <div class="profile-details">
+
+        <div class="profile-info">
+            <div class="info-item">
+                <span class="info-title">Email:</span>
+            </div>
+            <div class="cats-info">
+               <p>Her skal vi tilføje logik for visning af katte</p>
+            </div>
+        </div>
+    </div>
+</div>
 </body>
 </html>

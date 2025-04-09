@@ -7,6 +7,7 @@ public class User {
     private String username;
     private String password;
     private String email;
+    private String role; //User og Admin er vores Roller
 
     public User(String email, int userId, String ownerName, String username, String password) {
         this.userId = userId;
@@ -18,6 +19,10 @@ public class User {
 
     public User(){}
 
+
+    public String getRole() {return role;}
+
+    public void setRole(String role) {this.role = role;}
 
     public int getUserId() {
         return userId;
