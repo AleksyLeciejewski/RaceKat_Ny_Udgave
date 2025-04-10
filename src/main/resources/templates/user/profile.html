@@ -13,7 +13,7 @@
 
         <img src="/pics/defaultpfp.jpg" alt="Profilbillede" class="profile-avatar">
 
-        <h1 class="profile-name">Brugerens Navn</h1>
+        <h1 class="profile-name" th:text="${user.ownerName}">Brugerens Navn</h1>
     </div>
 
     <form action="/user/list" th:href="@{/usersList}">
@@ -23,20 +23,28 @@
 
         <div class="profile-info">
             <div class="info-item">
-                <span class="info-title">Email:</span>
+                <span class="info-title" th:text="${user.email}">Email:</span>
             </div>
             <div class="cats-info">
             <h2>Dine Katte!</h2>
+                <div class="add-pet">
+                    <a th:href="@{/pet/add}" class="add-pet-button">Tilføj Kæledyr</a>
+                </div>
                 <ul>
                     <li th:each="pet: ${pets}">
                     <strong>Navn: </strong> <span th:text="${pet.name}"></span>
                     <strong>Race: </strong> <span th:text="${pet.breed}"></span>
                     <strong>Alder: </strong> <span th:text="${pet.age}"></span>
+                        <a th:href="@{'pet/edit/' + ${pet.id}}" class="edit-button">Rediger</a>
+                        <form th:action="@{'pet/delete/' + ${pet.id}}" method="post">
+                        <button type="submit" class="delete-button">Slet</button>
+                        </form>
                     </li>
                 </ul>
             </div>
         </div>
     </div>
 </div>
+
 </body>
 </html>
