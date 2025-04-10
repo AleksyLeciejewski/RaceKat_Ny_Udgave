@@ -46,16 +46,13 @@ body {
     color: #333;
 }
 
-
 .profile-details {
     line-height: 1.6;
 }
 
-
 .profile-info {
     margin-top: 20px;
 }
-
 
 .info-item {
     margin-bottom: 10px;
@@ -71,4 +68,21 @@ body {
     display: flex;
     flex-direction: column;
     gap: 10px;
+}
+
+.add-pet-button {
+    display: inline-block;
+    padding: 12px 20px;
+    background-color: rgba(32, 213, 197, 0.67);
+    color: #fff;
+    text-decoration: none;
+    font-size: 12px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.add-pet-button:hover {
+    background-color: rgba(36, 162, 151, 0.82);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
 }

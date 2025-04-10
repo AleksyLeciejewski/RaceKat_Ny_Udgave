@@ -117,7 +117,7 @@ public class PetController {
             return "redirect:/pet/list";
         }
 
-        // Debug-udskrift for at sikre, at pet tilhører den loggede bruger
+        // Debug log, lortet virker ik :)))
         System.out.println("Editing pet id: " + pet.getPetId());
         System.out.println("Profile userId: " + profile.getUserId() + ", Logged in userId: " + user.getUserId());
 
@@ -176,8 +176,6 @@ public class PetController {
             return "redirect:/auth/login";
         }
         Pet pet = petService.getPetById(petId);
-        // (pet == null || pet.getPetOwner(pet).getUserId() != user.getUserId())
-        //Gammel kode bliver her lige, hvis det nye jeg har lavet ik virker.
         Profile profile = profileService.getProfileById(pet.getProfileId());
         if (pet == null || profile == null || profile.getUserId() != user.getUserId()) {
             return "redirect:/pet/list";
@@ -210,7 +208,6 @@ public class PetController {
             return "redirect:/login";
         }
 
-        //Plads til eventuel logik for kontrol af brugerens rolle, tænker vi kan lave en admin og almindelig user template til hver
 
         List<Pet> allPets = petService.getAllPets();
         model.addAttribute("pets", allPets);

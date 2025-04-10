@@ -103,7 +103,6 @@ public class UserController {
             return "redirect:/auth/login";
         }
 
-        // Slet alle brugerens kæledyr først (vigtigt for database integritet)
         List<Pet> userPets = petService.getPetsByUserId(user.getUserId());
         for (Pet pet : userPets) {
             petService.deletePet(pet.getPetId());

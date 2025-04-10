@@ -33,6 +33,7 @@ public class PetRepo implements PetRepoInt {
         String sql = "INSERT INTO pets (NAME, BREED, age, owner_id) VALUES (?, ?, ?, ?)";
         KeyHolder keyHolder = new GeneratedKeyHolder();
         int rowsInserted = jdbcTemplate.update(connection -> {
+            // Anden parameter 'new String[]{"pet_id"}' fortæller databasen, at vi ønsker at hente den genererede nøgle for kolonnen "pet_id".
             PreparedStatement ps = connection.prepareStatement(sql, new String[]{"pet_id"});
             ps.setString(1, pet.getPetName());
             ps.setString(2, pet.getBreed());
@@ -41,9 +42,10 @@ public class PetRepo implements PetRepoInt {
             return ps;
         }, keyHolder);
 
-
+        //Debugging, for at fejlfinde ;)
         System.out.println("Rows inserted in pets: " + rowsInserted);
         System.out.println("Generated pet_id: " + keyHolder.getKey());
+        // Sætter den genererede nøgle ind i vores pet objekt.
         pet.setPetId(keyHolder.getKey().intValue());
         return pet;
     }
