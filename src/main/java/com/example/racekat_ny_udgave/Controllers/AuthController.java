@@ -66,8 +66,7 @@ public class AuthController {
 
         // Registrér ny bruger
         try {
-            int userId = userService.generateUserId();//Overveje om vi skal smide det i servicelaget istedet
-            userService.registerUser(email, userId, password);
+            userService.registerUser(email, username, password);
             model.addAttribute("success", "Din konto er blevet oprettet. Log venligst ind.");
             return "redirect:/login";
         } catch (Exception e) {

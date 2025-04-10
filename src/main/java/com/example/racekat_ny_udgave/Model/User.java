@@ -9,12 +9,11 @@ public class User {
     private String email;
     private String role; //User og Admin er vores Roller
 
-    public User(String email, int userId, String ownerName, String username, String password) {
-        this.userId = userId;
-        this.ownerName = ownerName;
+    public User(String email, String username, String password) {
+        this.email = email;
+        this.ownerName = username;
         this.username = username;
         this.password = password;
-        this.email = email;
     }
 
     public User(){}

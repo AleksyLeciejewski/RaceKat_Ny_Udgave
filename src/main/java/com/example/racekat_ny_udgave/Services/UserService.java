@@ -16,8 +16,9 @@ public class UserService {
         this.userRepo = userRepo;
     }
 
-    public User registerUser(String email, int userId, String password) {
-        User user = new User(userId, password, email);
+
+    public User registerUser(String email, String username, String password) {
+        User user = new User(email, username, password);
         return userRepo.addUser(user);
     }
 
@@ -48,6 +49,8 @@ public class UserService {
         return userRepo.findUserByEmail(email) != null;
     }
 
+
+    /*
     public int generateUserId() {
         //Midlertidig impl. fremfor db auto incriment til test
         List<User> allUsers = userRepo.getAllUsers();
@@ -59,6 +62,8 @@ public class UserService {
         }
         return maxId + 1;
     }
+
+     */
 
     private ProfileService profileService;
 
