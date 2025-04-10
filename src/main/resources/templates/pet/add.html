@@ -9,21 +9,21 @@
 <div class="container">
 
 <h1>Tilføj Kæledyr</h1>
-<form th:action="@{/pet/add}" th:object="${pet}" method="post">
-    <div>
-        <label for="petName">Navn: </label>
-        <input type="text" id="petName" th:field="*{petName}" placeholder="Navn" required>
-    </div>
-    <div>
-        <label for="petAge">Alder: </label>
-        <input type="text" id="petAge" th:field="*{petAge}" placeholder="Alder" required>
-    </div>
-    <div>
-        <label for="breed">Race: </label>
-        <input type="text" id="breed" th:field="*{breed}" placeholder="Race" required>
-    </div>
-    <button type="submit">Gem kæledyr</button>
-</form>
+    <form th:action="@{/pet/add}" method="post">
+        <div>
+            <label for="petName">Navn: </label>
+            <input type="text" id="petName" name="petName" placeholder="Navn" required>
+        </div>
+        <div>
+            <label for="petAge">Alder: </label>
+            <input type="number" id="petAge" name="petAge" placeholder="Alder" required>
+        </div>
+        <div>
+            <label for="breed">Race: </label>
+            <input type="text" id="breed" name="breed" placeholder="Race" required>
+        </div>
+        <button type="submit">Gem kæledyr</button>
+    </form>
     <p>
         <a th:href="@{/user/profile}">Tilbage til Profil</a>
     </p>

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Dine Katte</title>
+  <link rel="stylesheet" th:href="@{/css/listCSS.css}" />
+</head>
+<body>
+<h1>Dine Katte</h1>
+
+<!-- Link til at tilføje et nyt kæledyr -->
+<div>
+  <a th:href="@{/pet/add}">Tilføj nyt kæledyr</a>
+</div>
+
+<!-- Tabel med dine kæledyr -->
+<table border="1">
+  <thead>
+  <tr>
+    <th>Navn</th>
+    <th>Race</th>
+    <th>Alder</th>
+    <th>Handlinger</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="pet : ${pets}">
+    <td th:text="${pet.petName}">Pet Navn</td>
+    <td th:text="${pet.breed}">Rase</td>
+    <td th:text="${pet.petAge}">Alder</td>
+    <td>
+      <a th:href="@{'/pet/edit/' + ${pet.petId}}">Rediger</a>
+      <form th:action="@{'/pet/delete/' + ${pet.petId}}" method="post" style="display:inline;">
+        <button type="submit">Slet</button>
+      </form>
+    </td>
+  </tr>
+  <!-- Hvis der ikke er nogen pets, kan du vise en besked -->
+  <tr th:if="${#lists.isEmpty(pets)}">
+    <td colspan="4">Ingen kæledyr fundet.</td>
+  </tr>
+  </tbody>
+</table>
+
+<!-- Link til at vende tilbage til profil-siden -->
+<div>
+  <a th:href="@{/user/profile}">Tilbage til Profil</a>
+</div>
+</body>
+</html>

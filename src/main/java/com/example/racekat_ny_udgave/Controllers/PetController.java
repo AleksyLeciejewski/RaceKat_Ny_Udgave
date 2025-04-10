@@ -39,17 +39,15 @@ public class PetController {
     }
 
      @GetMapping("/list")
-    public String listPets(HttpSession session, Model model) {
-        User user = getAuthenticatedUser(session);
-        if (user == null) {
-            return "redirect:/login";
-        }
-
-        List<Pet> userPets = petService.getPetsByUserId(user.getUserId());
-        model.addAttribute("pets", userPets);
-
-        return "pet/list";
-    }
+     public String listPets(HttpSession session, Model model) {
+         User user = getAuthenticatedUser(session);
+         if (user == null) {
+             return "redirect:/auth/login";
+         }
+         List<Pet> userPets = petService.getPetsByUserId(user.getUserId());
+         model.addAttribute("pets", userPets);
+         return "pet/list";
+     }
 
 
     @GetMapping("/add")
@@ -81,6 +79,8 @@ public class PetController {
                 model.addAttribute("Error", "Ingen profil fundet, SQL Problemer ;)");
                 model.addAttribute("pet", new Pet());
                 return "pet/add";
+            } else {
+                System.out.println("Profil fundet med ID: " + profile.getProfileId());
             }
             // Opret et nyt Pet objekt
             Pet pet = new Pet();

@@ -78,6 +78,7 @@ public class AuthController {
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", "Der opstod en fejl: " + e.getMessage());
+            System.out.println(e.getMessage());
             return "register";
         }
     }

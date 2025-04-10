@@ -7,6 +7,10 @@ public class Profile {
     private String profileDescription;
     private int userId;
 
+    public Profile() {
+
+    }
+
     public Profile(int profileId, String profileName, String profileDescription, int userId) {
         this.profileId = profileId;
         this.profileName = profileName;

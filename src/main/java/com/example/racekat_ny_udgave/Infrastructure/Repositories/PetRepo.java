@@ -22,9 +22,10 @@ public class PetRepo implements PetRepoInt {
 
     @Override
     public List<Pet> getAllPets(){
-    String sql = "SELECT * FROM pets";
-    return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pet.class));
+        String sql = "SELECT pet_id AS petId, NAME AS petName, age AS petAge, BREED AS breed, owner_id AS profileId FROM pets";
+        return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Pet.class));
     }
+
 
     @Override
     public Pet addPet(Pet pet) {
@@ -38,6 +39,7 @@ public class PetRepo implements PetRepoInt {
             ps.setInt(4, pet.getProfileId());
             return ps;
         }, keyHolder);
+
 
         System.out.println("Rows inserted in pets: " + rowsInserted);
         System.out.println("Generated pet_id: " + keyHolder.getKey());
@@ -53,9 +55,10 @@ public class PetRepo implements PetRepoInt {
 
     @Override
     public Pet findPetById(int petId){
-        String sql = "SELECT * FROM pets WHERE pet_id = ?";
+        String sql = "SELECT pet_id AS petId, NAME AS petName, age AS petAge, BREED AS breed, owner_id AS profileId FROM pets WHERE pet_id = ?";
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Pet.class), petId);
     }
+
 
     @Override
     public void updatePet(Pet pet){
