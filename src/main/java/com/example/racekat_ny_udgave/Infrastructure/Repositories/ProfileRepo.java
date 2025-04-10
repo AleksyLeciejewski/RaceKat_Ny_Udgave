@@ -38,13 +38,19 @@ public class ProfileRepo implements ProfileRepoInt {
 
     @Override
     public Profile getProfileById(int profileId) {
-        String sql = "SELECT * FROM Profile WHERE profile_id = ?";
+        String sql = "SELECT profile_id AS profileId, " +
+                "profile_name AS profileName, " +
+                "profile_description AS profileDescription, " +
+                "profile_userfk AS userId " +
+                "FROM profile WHERE profile_id = ?";
         try {
             return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Profile.class), profileId);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
+
 
     @Override
     public Profile createProfile(Profile profile, int userId) {

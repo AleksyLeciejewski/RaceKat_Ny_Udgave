@@ -27,6 +27,7 @@ public class PetRepo implements PetRepoInt {
     }
 
 
+
     @Override
     public Pet addPet(Pet pet) {
         String sql = "INSERT INTO pets (NAME, BREED, age, owner_id) VALUES (?, ?, ?, ?)";
@@ -54,7 +55,7 @@ public class PetRepo implements PetRepoInt {
     }
 
     @Override
-    public Pet findPetById(int petId){
+    public Pet findPetById(int petId) {
         String sql = "SELECT pet_id AS petId, NAME AS petName, age AS petAge, BREED AS breed, owner_id AS profileId FROM pets WHERE pet_id = ?";
         return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Pet.class), petId);
     }

@@ -114,14 +114,22 @@ public class UserController {
         return "redirect:/auth/login?deleted=true";
     }
 
-    // Admin funktionalitet - kun tilgængelig for admin brugere
+
     @GetMapping("/list")
     public String listAllUsers(HttpSession session, Model model) {
-        User user = getAuthenticatedUser(session);
-        if (user == null) {
+        User loggedInUser = getAuthenticatedUser(session);
+        if (loggedInUser == null) {
             return "redirect:/auth/login";
         }
+        // Hent alle brugere
         List<User> allUsers = userService.getAllUsers();
+
+        // For hver bruger hentes deres kæledyr og sættes på bruger-objektet
+        for (User u : allUsers) {
+            List<Pet> petsForUser = petService.getPetsByUserId(u.getUserId());
+            u.setPets(petsForUser);
+        }
+
         model.addAttribute("users", allUsers);
         return "user/list";
     }

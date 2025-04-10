@@ -106,18 +106,31 @@ public class PetController {
         }
 
         Pet pet = petService.getPetById(petId);
-
-        // Sikkerhedscheck, sikrer kun ejeren kan redigere sit kæledyr
-
-        Profile profile = profileService.getProfileById(pet.getProfileId());
-        if (pet == null || profile == null || profile.getUserId() != user.getUserId()) {
+        if (pet == null) {
+            System.out.println("Ingen pet fundet med id: " + petId);
             return "redirect:/pet/list";
         }
 
+        Profile profile = profileService.getProfileById(pet.getProfileId());
+        if (profile == null) {
+            System.out.println("Ingen profil fundet for pet med owner_id: " + pet.getProfileId());
+            return "redirect:/pet/list";
+        }
+
+        // Debug-udskrift for at sikre, at pet tilhører den loggede bruger
+        System.out.println("Editing pet id: " + pet.getPetId());
+        System.out.println("Profile userId: " + profile.getUserId() + ", Logged in userId: " + user.getUserId());
+
+        if (profile.getUserId() != user.getUserId()) {
+            System.out.println("Pet ejes ikke af den loggede bruger – omdirigerer til liste");
+            return "redirect:/pet/list";
+        }
 
         model.addAttribute("pet", pet);
         return "pet/edit";
     }
+
+
 
     @PostMapping("/edit/{id}")
     public String updatePet(@PathVariable("id") int petId, @RequestParam("petName") String petName, @RequestParam("petAge") int petAge, @RequestParam("breed") String breed, HttpSession session, Model model) {

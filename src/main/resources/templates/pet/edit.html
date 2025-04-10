@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Rediger Kæledyr</title>
+  <link rel="stylesheet" th:href="@{/css/editCSS.css}">
+</head>
+<body>
+<div class="container">
+  <h1>Rediger Kæledyr</h1>
+  <!-- Formularen indsender til /pet/edit/{petId} og binder til objektet pet -->
+  <form th:action="@{'/pet/edit/' + ${pet.petId}}" th:object="${pet}" method="post">
+    <div class="form-group">
+      <label for="petName">Navn:</label>
+      <input type="text" id="petName" th:field="*{petName}" placeholder="Kæledyrets navn" required>
+    </div>
+    <div class="form-group">
+      <label for="petAge">Alder:</label>
+      <input type="number" id="petAge" th:field="*{petAge}" placeholder="Kæledyrets alder" required>
+    </div>
+    <div class="form-group">
+      <label for="breed">Race:</label>
+      <input type="text" id="breed" th:field="*{breed}" placeholder="Kæledyrets race" required>
+    </div>
+    <div class="form-group">
+      <button type="submit">Opdater Kæledyr</button>
+    </div>
+  </form>
+  <p>
+    <a th:href="@{/pet/list}">Tilbage til Kæledyrslisten</a>
+  </p>
+</div>
+</body>
+</html>

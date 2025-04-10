@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/css/adminCSS.css}"/>
+</head>
+<body>
+<header>
+    <h1>Admin Dashboard</h1>
+</header>
+
+<nav>
+    <ul>
+        <li><a th:href="@{/admin/users}">Administrer Brugere</a></li>
+        <li><a th:href="@{/admin/pets}">Administrer Kæledyr</a></li>
+        <li><a th:href="@{/admin/createPet}">Opret Nyt Kæledyr til bruger</a></li>
+        <li><a th:href="@{/logout}">Log ud</a></li>
+    </ul>
+</nav>
+
+<section>
+    <p>Velkommen til admin-dashboardet. Her kan du administrere brugere, kæledyr og andre opgaver.</p>
+    <!-- Du kan her tilføje yderligere information, statistik eller widgets -->
+</section>
+
+</body>
+</html>

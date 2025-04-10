@@ -23,7 +23,7 @@ public class UserRepo implements UserRepoInt {
 
     @Override
     public List<User> getAllUsers() {
-        String sql = "SELECT * FROM bruger";
+        String sql = "SELECT bruger_id AS userId, email, name AS ownerName, password FROM bruger";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(User.class));
     }
 

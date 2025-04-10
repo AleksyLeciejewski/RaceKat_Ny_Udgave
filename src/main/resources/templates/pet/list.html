@@ -26,7 +26,7 @@
   <tbody>
   <tr th:each="pet : ${pets}">
     <td th:text="${pet.petName}">Pet Navn</td>
-    <td th:text="${pet.breed}">Rase</td>
+    <td th:text="${pet.breed}">Race</td>
     <td th:text="${pet.petAge}">Alder</td>
     <td>
       <a th:href="@{'/pet/edit/' + ${pet.petId}}">Rediger</a>
