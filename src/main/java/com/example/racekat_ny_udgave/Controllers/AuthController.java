@@ -1,5 +1,6 @@
 package com.example.racekat_ny_udgave.Controllers;
 
+import com.example.racekat_ny_udgave.Model.Profile;
 import com.example.racekat_ny_udgave.Model.User;
 import com.example.racekat_ny_udgave.Services.ProfileService;
 import com.example.racekat_ny_udgave.Services.UserService;
@@ -64,9 +65,15 @@ public class AuthController {
             return "redirect:/login";
         }
 
-        // Registrér ny bruger
         try {
-            userService.registerUser(email, username, password);
+            // Registrér ny bruger
+            User newUser = userService.registerUser(email, username, password);
+
+            // Opret en standardprofil for denne bruger
+            Profile defaultProfile = new Profile(0, newUser.getUsername(), "Standard profil", newUser.getUserId());
+            Profile oprettetProfile = profileService.createProfile(newUser.getUserId(), defaultProfile.getProfileName(), defaultProfile.getProfileDescription());
+            System.out.println("Oprettet profil med id: " + oprettetProfile.getProfileId());
+
             model.addAttribute("success", "Din konto er blevet oprettet. Log venligst ind.");
             return "redirect:/login";
         } catch (Exception e) {
@@ -80,9 +87,6 @@ public class AuthController {
         session.invalidate();
         return "redirect:/login";
     }
+}
 
-//    private User getUserFromSession(HttpSession session) {
-    //      return (User) session.getAttribute("user");
-// }
-    }
 

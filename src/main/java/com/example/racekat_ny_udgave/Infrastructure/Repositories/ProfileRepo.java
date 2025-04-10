@@ -40,7 +40,7 @@ public class ProfileRepo implements ProfileRepoInt {
 
     @Override
     public Profile createProfile(Profile profile, int userId) {
-        String sql = "INSERT INTO Profile (profile_name, profile_description, profile_userfk) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO profile (profile_name, profile_description, profile_userfk) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, profile.getProfileName(), profile.getProfileDescription(), userId);
         return getProfileByUserId(userId);
     }

@@ -1,8 +1,10 @@
 package com.example.racekat_ny_udgave.Services;
 
+import com.example.racekat_ny_udgave.Infrastructure.Repositories.ProfileRepo;
 import com.example.racekat_ny_udgave.Infrastructure.Repositories.UserRepo;
 import com.example.racekat_ny_udgave.Model.Profile;
 import com.example.racekat_ny_udgave.Model.User;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -11,9 +13,13 @@ import java.util.List;
 public class UserService {
 
     private UserRepo userRepo;
+    private ProfileService profileService;
 
     public UserService(UserRepo userRepo) {
         this.userRepo = userRepo;
+    }
+    public void setProfileService(@Lazy ProfileService profileService) {
+        this.profileService = profileService;
     }
 
 
@@ -50,27 +56,9 @@ public class UserService {
     }
 
 
-    /*
-    public int generateUserId() {
-        //Midlertidig impl. fremfor db auto incriment til test
-        List<User> allUsers = userRepo.getAllUsers();
-        int maxId = 0;
-        for (User user : allUsers) {
-            if (user.getUserId() > maxId) {
-                maxId = user.getUserId();
-            }
-        }
-        return maxId + 1;
-    }
-
-     */
-
-    private ProfileService profileService;
-
     public User getUserByProfileId(int profileId) {
         Profile profile = profileService.getProfileById(profileId);
         if (profile == null) return null;
-        return getUserById(profile.getProfileId());
+        return getUserById(profile.getUserId());
     }
-
 }

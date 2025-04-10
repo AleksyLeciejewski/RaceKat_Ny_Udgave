@@ -38,7 +38,7 @@ public class PetController {
         return userService.getUserById(userId);
     }
 
- /*   @GetMapping("/list")
+     @GetMapping("/list")
     public String listPets(HttpSession session, Model model) {
         User user = getAuthenticatedUser(session);
         if (user == null) {
@@ -51,19 +51,18 @@ public class PetController {
         return "pet/list";
     }
 
-  */
 
-    @GetMapping("/create")
-    public String showCreatePetForm(HttpSession session) {
+    @GetMapping("/add")
+    public String showCreatePetForm(HttpSession session, Model model) {
         User user = getAuthenticatedUser(session);
         if (user == null) {
             return "redirect:/auth/login";
         }
-
-        return "pet/create";
+        model.addAttribute("pet", new Pet());
+        return "pet/add";
     }
 
-    @PostMapping("/create")
+    @PostMapping("/add")
     public String createPet(
             @RequestParam("petName") String petName,
             @RequestParam("petAge") int petAge,
@@ -72,7 +71,7 @@ public class PetController {
 
         User user = getAuthenticatedUser(session);
         if (user == null) {
-            return "redirect:/auth/login";
+            return "redirect:/login";
         }
 
         try {
@@ -80,7 +79,8 @@ public class PetController {
             Profile profile = profileService.getProfileByUserId(user.getUserId());
             if (profile == null) {
                 model.addAttribute("Error", "Ingen profil fundet, SQL Problemer ;)");
-                return "pet/create";
+                model.addAttribute("pet", new Pet());
+                return "pet/add";
             }
             // Opret et nyt Pet objekt
             Pet pet = new Pet();
@@ -90,11 +90,11 @@ public class PetController {
             pet.setProfileId(profile.getProfileId());
 
             petService.registerPet(pet);
-
             return "redirect:/pet/list";
         } catch (Exception e) {
             model.addAttribute("error", "Der opstod en fejl: " + e.getMessage());
-            return "pet/create";
+            model.addAttribute("pet", new Pet());
+            return "pet/add";
         }
     }
 
@@ -102,7 +102,7 @@ public class PetController {
     public String showEditPetForm(@PathVariable("id") int petId, HttpSession session, Model model) {
         User user = getAuthenticatedUser(session);
         if (user == null) {
-            return "redirect:/auth/login";
+            return "redirect:/login";
         }
 
         Pet pet = petService.getPetById(petId);
@@ -123,7 +123,7 @@ public class PetController {
     public String updatePet(@PathVariable("id") int petId, @RequestParam("petName") String petName, @RequestParam("petAge") int petAge, @RequestParam("breed") String breed, HttpSession session, Model model) {
         User user = getAuthenticatedUser(session);
         if (user == null) {
-            return "redirect:/auth/login";
+            return "redirect:/login";
         }
         Pet pet = petService.getPetById(petId);
         Profile profile = profileService.getProfileById(pet.getProfileId());
@@ -145,7 +145,7 @@ public class PetController {
                                             HttpSession session, Model model) {
         User user = getAuthenticatedUser(session);
         if (user == null) {
-            return "redirect:/auth/login";
+            return "redirect:/login";
         }
         Pet pet = petService.getPetById(petId);
         Profile profile = profileService.getProfileById(pet.getProfileId());
@@ -178,7 +178,7 @@ public class PetController {
                                  HttpSession session, Model model) {
         User user = getAuthenticatedUser(session);
         if (user == null) {
-            return "redirect:/auth/login";
+            return "redirect:/login";
         }
         Pet pet = petService.getPetById(petId);
         if (pet == null) {
@@ -194,7 +194,7 @@ public class PetController {
     public String listAllPets(HttpSession session, Model model) {
         User user = getAuthenticatedUser(session);
         if (user == null) {
-            return "redirect:/auth/login";
+            return "redirect:/login";
         }
 
         //Plads til eventuel logik for kontrol af brugerens rolle, tænker vi kan lave en admin og almindelig user template til hver
