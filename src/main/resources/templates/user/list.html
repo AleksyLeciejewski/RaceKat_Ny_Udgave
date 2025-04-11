@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Liste over Brugere</title>
+  <link rel="stylesheet" th:href="@{/css/userListCSS.css}" />
+</head>
+<body>
+<h1>Liste over Brugere</h1>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Navn</th>
+    <th>Email</th>
+    <th>Kæledyr</th>
+  </tr>
+  </thead>
+  <tbody>
+  <tr th:each="user : ${users}">
+    <td th:text="${user.ownerName}">Bruger Navn</td>
+    <td th:text="${user.email}">email@example.com</td>
+    <td>
+      <div th:if="${user.pets != null and !#lists.isEmpty(user.pets)}">
+        <ul>
+          <li th:each="pet : ${user.pets}">
+            <span th:text="${pet.petName}">Kæledyr Navn</span>
+            (<span th:text="${pet.petAge}">Alder</span> år,
+            <span th:text="${pet.breed}">Race</span>)
+          </li>
+        </ul>
+      </div>
+      <div th:if="${user.pets == null or #lists.isEmpty(user.pets)}">
+        Ingen kæledyr
+      </div>
+    </td>
+  </tr>
+  </tbody>
+</table>
+<p>
+  <a th:href="@{/user/profile}">Tilbage til Profil</a>
+</p>
+</body>
+</html>

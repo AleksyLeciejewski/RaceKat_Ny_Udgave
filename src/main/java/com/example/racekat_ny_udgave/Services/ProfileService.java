@@ -35,13 +35,14 @@ public class ProfileService {
         // Tjek om brugeren allerede har en profil
         Profile existingProfile = getProfileByUserId(userId);
         if (existingProfile != null) {
-            return existingProfile; // Eller kast en exception
+            return existingProfile; // Eller kast en exception, hvis det ønskes
         }
 
-        // Opret ny profil
+        // Opret ny profil – brug 0 som dummy for profileId, da den skal auto-genereres af databasen
         Profile newProfile = new Profile(0, profileName, description, userId);
         return profileRepo.createProfile(newProfile, userId);
     }
+
 
     public void updateProfile(Profile profile) {
         profileRepo.updateProfile(profile);

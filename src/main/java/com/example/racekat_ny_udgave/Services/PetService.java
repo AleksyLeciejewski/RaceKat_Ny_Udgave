@@ -21,6 +21,8 @@ public class PetService {
     }
 
     public Pet registerPet(Pet pet){
+
+
         return petRepo.addPet(pet);
     }
 
@@ -65,7 +67,7 @@ public class PetService {
     public List<Pet> getPetsByUserId(int userId) {
         Profile profile = profileService.getProfileByUserId(userId);
         if (profile == null) {
-            return new ArrayList<>(); // Brugeren har ingen profil
+            return new ArrayList<>();
         }
         return getPetsByProfileId(profile.getProfileId());
     }

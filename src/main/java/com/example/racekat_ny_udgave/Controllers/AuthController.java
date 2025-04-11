@@ -1,6 +1,8 @@
 package com.example.racekat_ny_udgave.Controllers;
 
+import com.example.racekat_ny_udgave.Model.Profile;
 import com.example.racekat_ny_udgave.Model.User;
+import com.example.racekat_ny_udgave.Services.PetService;
 import com.example.racekat_ny_udgave.Services.ProfileService;
 import com.example.racekat_ny_udgave.Services.UserService;
 import jakarta.servlet.http.HttpSession;
@@ -15,11 +17,13 @@ public class AuthController {
 
     private final UserService userService;
     private final ProfileService profileService;
+    private final PetService petService;
 
     @Autowired
-    public AuthController(UserService userService, ProfileService profileService) {
+    public AuthController(UserService userService, ProfileService profileService, PetService petService) {
         this.userService = userService;
         this.profileService = profileService;
+        this.petService = petService;
     }
 
 
@@ -40,6 +44,10 @@ public class AuthController {
             session.setAttribute("userId", user.getUserId());
             session.setAttribute("username", user.getUsername());
             session.setAttribute("user", user);
+            // Tjek om brugeren er admin
+            if ("admin".equalsIgnoreCase(user.getRole())) {
+                return "redirect:/admin/dashboard";
+            }
             return "redirect:/user/profile";
         } else {
             model.addAttribute("error", "Forkert email eller adgangskode");
@@ -64,13 +72,23 @@ public class AuthController {
             return "redirect:/login";
         }
 
-        // Registrér ny bruger
+
+
         try {
-            userService.registerUser(email, username, password);
+            // Registrér ny bruger
+            User newUser = userService.registerUser(email, username, password);
+            newUser.setRole("USER");
+
+            // Opret en standardprofil for denne bruger
+            Profile defaultProfile = new Profile(0, newUser.getUsername(), "Standard profil", newUser.getUserId());
+            Profile oprettetProfile = profileService.createProfile(newUser.getUserId(), defaultProfile.getProfileName(), defaultProfile.getProfileDescription());
+            System.out.println("Oprettet profil med id: " + oprettetProfile.getProfileId());
+
             model.addAttribute("success", "Din konto er blevet oprettet. Log venligst ind.");
             return "redirect:/login";
         } catch (Exception e) {
             model.addAttribute("error", "Der opstod en fejl: " + e.getMessage());
+            System.out.println(e.getMessage());
             return "register";
         }
     }
@@ -81,8 +99,21 @@ public class AuthController {
         return "redirect:/login";
     }
 
-//    private User getUserFromSession(HttpSession session) {
-    //      return (User) session.getAttribute("user");
-// }
+    @GetMapping("/admin")
+    public String showAdminPage() {
+        return "admin/dashboard";
     }
+
+    @GetMapping("/admin/users")
+    public String showUsers(Model model) {
+        model.addAttribute("users", userService.getAllUsers());
+        return "admin/users";
+    }
+    @GetMapping("/admin/pets")
+    public String showPets(Model model) {
+        model.addAttribute("pets", petService.getAllPets());
+        return "admin/pets";
+    }
+}
+
 

@@ -1,0 +1,85 @@
+body {
+    margin: 0;
+    padding: 20px;
+    font-family: 'Roboto', sans-serif;
+    background: #1e1e2d;
+    color: #c7c7c7;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+}
+
+h1 {
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 2.5em;
+    color: rgba(255,255,255,0.89);
+    text-shadow: 0 0 10px rgb(245,245,220);
+}
+
+a {
+    color: #ffffff;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    color: #99ff99;
+    text-decoration: underline;
+}
+
+div {
+    margin: 10px 0;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+}
+
+th, td {
+    border: 1px solid rgba(255,255,255,0.1);
+    padding: 12px 10px;
+    text-align: left;
+}
+
+th {
+    background-color: rgba(20, 20, 30, 0.95);
+    color: #ffffff;
+}
+
+tr:hover {
+    background-color: rgba(255, 255, 255, 0.1);
+}
+
+.edit-btn, .delete-btn {
+    display: inline-block;
+    padding: 8px 16px;
+    font-size: 14px;
+    text-decoration: none;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    color: #fff;
+}
+
+.edit-btn {
+    background-color: #27ae60;   /* Grøn */
+}
+
+.edit-btn:hover {
+    background-color: #219150;
+}
+
+.delete-btn {
+    background-color: #e74c3c;   /* Rød */
+}
+
+.delete-btn:hover {
+    background-color: #c0392b;
+}

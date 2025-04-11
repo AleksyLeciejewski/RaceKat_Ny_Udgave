@@ -26,18 +26,18 @@
                 <span class="info-title" th:text="${user.email}">Email:</span>
             </div>
             <div class="cats-info">
-            <h2>Dine Katte!</h2>
+                <h2>Dine Katte!</h2>
                 <div class="add-pet">
                     <a th:href="@{/pet/add}" class="add-pet-button">Tilføj Kæledyr</a>
                 </div>
                 <ul>
-                    <li th:each="pet: ${pets}">
-                    <strong>Navn: </strong> <span th:text="${pet.name}"></span>
-                    <strong>Race: </strong> <span th:text="${pet.breed}"></span>
-                    <strong>Alder: </strong> <span th:text="${pet.age}"></span>
-                        <a th:href="@{'pet/edit/' + ${pet.id}}" class="edit-button">Rediger</a>
-                        <form th:action="@{'pet/delete/' + ${pet.id}}" method="post">
-                        <button type="submit" class="delete-button">Slet</button>
+                    <li th:each="pet : ${pets}">
+                        <strong>Navn: </strong> <span th:text="${pet.petName}">Dummy Navn</span><br>
+                        <strong>Race: </strong> <span th:text="${pet.breed}">Dummy Race</span><br>
+                        <strong>Alder: </strong> <span th:text="${pet.petAge}">Dummy Alder</span><br>
+                        <a th:href="@{'/pet/edit/' + ${pet.petId}}" class="edit-button">Rediger</a>
+                        <form th:action="@{'/pet/delete/' + ${pet.petId}}" method="post" style="display:inline;">
+                            <button type="submit" class="delete-button">Slet</button>
                         </form>
                     </li>
                 </ul>

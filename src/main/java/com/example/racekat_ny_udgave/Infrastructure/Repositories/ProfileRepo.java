@@ -20,34 +20,48 @@ public class ProfileRepo implements ProfileRepoInt {
 
     @Override
     public Profile getProfileByUserId(int userId) {
-        String sql = "SELECT * FROM Profile WHERE profile_userfk = ?";
+        String sql = "SELECT profile_id AS profileId, " +
+                "profile_name AS profileName, " +
+                "profile_description AS profileDescription, " +
+                "profile_userfk AS userId " +
+                "FROM profile WHERE profile_userfk = ?";
         try {
-            return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Profile.class), userId);
+            Profile p = jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Profile.class), userId);
+            System.out.println("Found profile: " + p);
+            return p;
         } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("Error retrieving profile for userId " + userId + ": " + e.getMessage());
             return null;
         }
     }
 
     @Override
     public Profile getProfileById(int profileId) {
-        String sql = "SELECT * FROM Profile WHERE profile_id = ?";
+        String sql = "SELECT profile_id AS profileId, " +
+                "profile_name AS profileName, " +
+                "profile_description AS profileDescription, " +
+                "profile_userfk AS userId " +
+                "FROM profile WHERE profile_id = ?";
         try {
             return jdbcTemplate.queryForObject(sql, new BeanPropertyRowMapper<>(Profile.class), profileId);
         } catch (Exception e) {
+            e.printStackTrace();
             return null;
         }
     }
 
+
     @Override
     public Profile createProfile(Profile profile, int userId) {
-        String sql = "INSERT INTO Profile (profile_name, profile_description, profile_userfk) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO profile (profile_name, profile_description, profile_userfk) VALUES (?, ?, ?)";
         jdbcTemplate.update(sql, profile.getProfileName(), profile.getProfileDescription(), userId);
         return getProfileByUserId(userId);
     }
 
     @Override
     public void updateProfile(Profile profile) {
-        String sql = "UPDATE Profile SET profile_name = ?, profile_description = ? WHERE profile_id = ?";
+        String sql = "UPDATE profile SET profile_name = ?, profile_description = ? WHERE profile_id = ?";
         jdbcTemplate.update(sql, profile.getProfileName(), profile.getProfileDescription(), profile.getProfileId());
     }
 
@@ -59,7 +73,7 @@ public class ProfileRepo implements ProfileRepoInt {
 
     @Override
     public List<Profile> getAllProfiles() {
-        String sql = "SELECT * FROM Profile";
+        String sql = "SELECT * FROM profile";
         return jdbcTemplate.query(sql, new BeanPropertyRowMapper<>(Profile.class));
     }
 }

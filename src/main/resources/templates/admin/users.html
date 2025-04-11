@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="da" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Administrer Brugere</title>
+    <link rel="stylesheet" th:href="@{/css/adminCSS.css}" />
+</head>
+<body>
+<h1>Administrer Brugere</h1>
+
+<table border="1">
+    <thead>
+    <tr>
+        <th>Bruger ID</th>
+        <th>Navn</th>
+        <th>Email</th>
+        <th>Kæledyr</th>
+        <th>Handlinger</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="user : ${users}">
+        <td th:text="${user.userId}">UserID</td>
+        <td th:text="${user.ownerName}">Bruger Navn</td>
+        <td th:text="${user.email}">email@example.com</td>
+        <td>
+            <div th:if="${user.pets != null and !#lists.isEmpty(user.pets)}">
+                <ul>
+                    <li th:each="pet : ${user.pets}">
+                        <span th:text="${pet.petName}">Kæledyr Navn</span>
+                        (<span th:text="${pet.petAge}">Alder</span> år,
+                        <span th:text="${pet.breed}">Race</span>)
+                        <a th:href="@{'/admin/editPet/' + ${pet.petId}}">Rediger Pet</a>
+                    </li>
+                </ul>
+            </div>
+            <div th:if="${user.pets == null or #lists.isEmpty(user.pets)}">
+                Ingen kæledyr
+            </div>
+        </td>
+        <td>
+            <a th:href="@{'/admin/editUser/' + ${user.userId}}">Rediger Bruger</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+
+<p>
+    <a th:href="@{/admin/dashboard}">Tilbage til Dashboard</a>
+</p>
+</body>
+</html>

@@ -1,5 +1,8 @@
 package com.example.racekat_ny_udgave.Model;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class User {
 
     private int userId;
@@ -9,6 +12,8 @@ public class User {
     private String email;
     private String role; //User og Admin er vores Roller
 
+    private List<Pet> pets = new ArrayList<>();
+
     public User(String email, String username, String password) {
         this.email = email;
         this.ownerName = username;
@@ -16,11 +21,17 @@ public class User {
         this.password = password;
     }
 
-    public User(){}
+    public User() {
+    }
 
-    public String getRole() {return role;}
 
-    public void setRole(String role) {this.role = role;}
+    public String getRole() {
+        return role;
+    }
+
+    public void setRole(String role) {
+        this.role = role;
+    }
 
     public int getUserId() {
         return userId;
@@ -62,5 +73,15 @@ public class User {
         this.email = email;
     }
 
-    public User(int userId, String password, String email) {}
+    public User(int userId, String password, String email) {
+    }
+
+
+    public List<Pet> getPets() {
+        return pets;
+    }
+
+    public void setPets(List<Pet> pets) {
+        this.pets = pets;
+    }
 }
