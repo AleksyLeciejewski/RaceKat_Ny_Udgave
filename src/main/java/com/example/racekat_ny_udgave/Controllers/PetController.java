@@ -80,7 +80,8 @@ public class PetController {
             Profile profile = profileService.getProfileByUserId(user.getUserId());
             if (profile == null) {
                 model.addAttribute("Error", "Ingen profil fundet, SQL Problemer ;)");
-                return "pet/create";
+                model.addAttribute("pet", new Pet());
+                return "pet/add";
             }
             // Opret et nyt Pet objekt
             Pet pet = new Pet();
